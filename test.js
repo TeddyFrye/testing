@@ -1,4 +1,5 @@
 // Test for capitalize function
+
 // Lowercase word
 test("capitalizes first leter of string", () => {
   expect(capitalize("hello")).toBe("Hello");
@@ -164,4 +165,56 @@ function caesar(inputStr, shift) {
   }
 
   return outputStr;
+}
+
+// Tests for analyze function
+test("returns object with average", () => {
+  expect(analyze([1, 2, 3])).toEqual({
+    average: 2,
+    min: 1,
+    max: 3,
+    length: 3,
+  });
+});
+
+test("returns empty object for empty array", () => {
+  expect(analyze([])).toEqual({});
+});
+
+test("returns object with average for negative numbers", () => {
+  expect(analyze([-1, -2, -3])).toEqual({
+    average: -2,
+    min: -3,
+    max: -1,
+    length: 3,
+  });
+});
+
+test("returns object with average for decimal numbers", () => {
+  expect(analyze([1.5, 2.5, 3.5])).toEqual({
+    average: 2.5,
+    min: 1.5,
+    max: 3.5,
+    length: 3,
+  });
+});
+
+//Actual Function
+function analyze(inputArr) {
+  let sum = 0;
+  let min = Infinity;
+  let max = -Infinity;
+  if (inputArr.length === 0) return {};
+  for (let i = 0; i < inputArr.length; i++) {
+    sum += inputArr[i];
+    min = Math.min(min, inputArr[i]);
+    max = Math.max(max, inputArr[i]);
+  }
+
+  return {
+    average: sum / inputArr.length,
+    min: min,
+    max: max,
+    length: inputArr.length,
+  };
 }
