@@ -1,7 +1,7 @@
 // Test for capitalize function
 
 // Lowercase word
-test("capitalizes first leter of string", () => {
+test("capitalizes first letter of string", () => {
   expect(capitalize("hello")).toBe("Hello");
 });
 
@@ -43,6 +43,15 @@ test("returns string with non-alphabetic start reversed", () => {
 
 test("returns string with spaces and symbols reversed", () => {
   expect(reverseString("hello world!")).toBe("!dlrow olleh");
+});
+
+// Extra tests for emoji
+test("reverseString-emoji-single", () => {
+  expect(reverseString("👋🏼")).toBe("👋🏼");
+});
+
+test("reverseString-emoji-sentence", () => {
+  expect(reverseString("hello 💯")).toBe("💯 olleh");
 });
 
 //Actual Function
@@ -145,17 +154,22 @@ test("shifts letters by 1 with different cases", () => {
   expect(caesar("HellO", 1)).toBe("IfmmP");
 });
 
+test("caesarCipher-word-shift-special-ascii", () => {
+  expect(caesar("hello 👋🏼", 2)).toBe("jgnnq 👋🏼");
+});
+
 //Actual Function
 function caesar(inputStr, shift) {
   shift = ((shift % 26) + 26) % 26; // Normalize the shift to [0, 25]
 
-  let outputStr = "";
+  let outputStr = ""; // Output string
   for (let i = 0; i < inputStr.length; i++) {
-    let charCode = inputStr.charCodeAt(i);
+    // Loop through each character in the input string
+    let charCode = inputStr.charCodeAt(i); // Get the character code of the current character
 
     if (charCode >= 65 && charCode <= 90) {
       // Uppercase characters
-      outputStr += String.fromCharCode(((charCode - 65 + shift) % 26) + 65);
+      outputStr += String.fromCharCode(((charCode - 65 + shift) % 26) + 65); // Shift the character code and convert it back to a character
     } else if (charCode >= 97 && charCode <= 122) {
       // Lowercase characters
       outputStr += String.fromCharCode(((charCode - 97 + shift) % 26) + 97);
